@@ -14,13 +14,13 @@
         <div class="row">
             <div class="col-3">
                 <div class="card">
-                    <h4 class="card-header">Search for a City:</h4>
+                    <h4 class="card-header">Search:</h4>
                     <div style="text-align: center">
                         <form id="city-form" class="card-body">
                         <input name="city" id="city" type="text" autofocus="true" class="form-input" style="max-width: 100%;" />
                     </div>
                     <div style="text-align: center"> 
-                        <button type="submit" class="btn-secondary btn-sm" id="search" onclick="getCityTemp()">Search</button>
+                        <button type="submit" class="btn-secondary btn-sm" id="search" onclick="getTemp()">Search</button>
                     </div>
                     </form>
                 </div>
@@ -63,7 +63,38 @@
                                 </div>
                             </div> 
                         </div>
-                 
+                        <div class="col-md-1" style="width:19.99992%">
+                            <div class="card"> 
+                                <div class="card-body bg-secondary text-light">
+                                    <h5 class="card-title" id="dt3"></h5>
+                                    <p class="card-text" id="i3"></p>
+                                    <p class="card-text">Temp: <span id="tThree"></span></p>
+                                    <p class="card-text">Wind: <span id="wThree"></span></p>
+                                    <p class="card-text">Humidity: <span id="hThree"></span></p>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-md-1" style="width:19.99992% ">
+                            <div class="card bg-secondary text-light"> 
+                                <div class="card-body">
+                                    <h5 class="card-title" id="dt4"></h5>
+                                    <p class="card-text" id="i4"></p>
+                                    <p class="card-text" >Temp: <span id="tFour"></span></p>
+                                    <p class="card-text" >Wind: <span id="wFour"></span></p>
+                                    <p class="card-text" >Humidity: <span id="hFour"></span></p>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-md-1" style="width:19.99992%">
+                            <div class="card bg-secondary text-light"> 
+                                <div class="card-body">
+                                    <h5 class="card-title" id="dt5"></h5>
+                                    <p class="card-text" id="i5"></p>
+                                    <p class="card-text">Temp: <span id="tFive"></span></p>
+                                    <p class="card-text">Wind: <span id="wFive"></span></p>
+                                    <p class="card-text">Humidity: <span id="hFive"></span></p>
+                                </div>
+                            </div> 
                         </div>
                     </div>
                 </div>
