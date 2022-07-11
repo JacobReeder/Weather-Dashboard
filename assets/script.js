@@ -1,6 +1,6 @@
 var textL = $("#city")
 var inCity = $("#cityLabel");
-var apiNew ="";
+var apiNew ="5ee8272113a5ff9365424925e09a0196";
 
 function getTemp(){
     event.preventDefault()
