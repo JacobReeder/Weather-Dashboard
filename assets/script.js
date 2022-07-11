@@ -2,6 +2,7 @@ var textL = $("#city")
 var inCity = $("#cityLabel");
 
 var newIcon = $('<img id="dynamic">');
+var getIcon = "http://openweathermap.org/img/wn/"
 
 //Span ID's
 var getTemp = $("#getTemp");
@@ -11,6 +12,10 @@ var uvSpan = $("#UvIndex");
 
 //API key
 var apiNew ="5ee8272113a5ff9365424925e09a0196";
+
+var apiMap = "http://api.openweathermap.org/geo/1.0/direct";
+var directionOne;
+var directionTwo;
 
 
 ////////////////////////////////////////
@@ -31,28 +36,28 @@ function getTemp(){
 ////////////////////////////////////////
 
 function getDir(place) {
-    var sRoute = geoAPI + "?q=" + city + "&limit=1&appid=" + apiNew;
+    var sRoute = apiMap + "?q=" + city + "&limit=1&appid=" + apiNew;
     fetch(sRoute).then(function(response) {
       if (response.ok) {
         response.json().then(function(data) {
           if (Object.keys(data).length === 0) {
     
-            inCity.text("WRONG! YOU LOSE!");
+            inCity.text("Cannot connect.");
             resetVal();
           }
           else {
             inCity.text(data[0].name + ", " + data[0].state + ", " + data[0].country);
-            lat = data[0].lat;
-            lon = data[0].lon; 
+            directionOne = data[0].directionOne;
+            directionTwo = data[0].directionTwo; 
             getWeather(place);
           
           }
         })
       }
-      else alert("Unable to connect, please try again later.");
+      else alert("Cannot Connect");
     })
     .catch(function(error) {
-      alert("Unable to connect, please try again later.");
+      alert("Cannot connect");
     })
   
 
@@ -61,7 +66,7 @@ function getDir(place) {
 ///////////////////////////////////////////
 
 function getWeather() {
-    var conditionGet = currentCondition + "?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey + "&exclude=hourly,minutely,alerts&units=imperial";
+    var conditionGet = currentCondition + "?lat=" + directionOne + "&lon=" + directionTwo + "&appid=" + apiNew + "&exclude=hourly,minutely,alerts&units=imperial";
   
     fetch(conditionGet).then(function(response) {
      
@@ -70,7 +75,7 @@ function getWeather() {
         response.json().then(function(data) {
           
             inCity.text(inCity.text() + ' (' + moment.unix(data.current.dt).format("MM/DD/YYYY") + ')');
-          newIcon.attr('src', iconURL + data.current.weather[0].icon + ".png");
+          newIcon.attr('src', getIcon + data.current.weather[0].icon + ".png");
           newIcon.appendTo(inCity);
 
           set5dayForecast(data);
@@ -101,7 +106,7 @@ function getWeather() {
           
         })
         saveCity(inCity.text().trim());
-        showRecentSearches();
+        newSearches();
       }
       else alert("Unable to connect");
     })
@@ -117,11 +122,11 @@ function newSearches() {
         var myDiv = document.getElementById("currentSearch");
         removePost(myDiv);
         if (localStorage.getItem('citySearch')) {
-          existing = localStorage.getItem('citySearch').split(';');
-          for (var i=0; i<existing.length; i++) {
+          List = localStorage.getItem('citySearch').split(';');
+          for (var i=0; i<List.length; i++) {
             var searchClick = document.createElement("button");
-            if (existing[i].trim().length>0) {
-              searchClick.innerText = existing[i];
+            if (List[i].trim().length>0) {
+              searchClick.innerText = List[i];
               searchClick.addEventListener('click', setCityAndSearch);
               myDiv.appendChild(searchButton);
             }
@@ -135,7 +140,25 @@ function removePost(parent) {
     }
   }
 
-function deleteAll() {
-  
+
+function setSearch() {
+     txtCity.val(this.innerHTML);
+  cityTemp();
 }
+
+function getCity() {
+    
+  var tOne = ''
+  var List = [];
+  if (localStorage.getItem('citySearch')) {
+    List = localStorage.getItem('citySearch').split(';');
+    tOne = localStorage.getItem('citySearch');
+  }
+  if (List.indexOf(cityName) === -1){
+    tOne += cityName + ";";
+    localStorage.setItem('citySearch', tmp);
+  }
+}
+
+
 
